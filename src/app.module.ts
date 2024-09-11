@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { ConfigKey, configuration, validationSchema } from './common/config';
+import { ConfigModule } from '@nestjs/config';
+import { configuration, validationSchema } from './common/config';
+import { DatabaseModule } from './common/database/database.module';
 
 @Module({
   imports: [
@@ -8,12 +9,7 @@ import { ConfigKey, configuration, validationSchema } from './common/config';
       load: [configuration],
       validationSchema,
     }),
+    DatabaseModule,
   ],
 })
-export class AppModule {
-  constructor(private readonly config: ConfigService) {
-    const url = config.get<string>(ConfigKey.DATABASE_URL);
-
-    console.log(url);
-  }
-}
+export class AppModule {}
